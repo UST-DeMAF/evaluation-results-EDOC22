@@ -1,4 +1,6 @@
 # evaluation-results-EDOC22
+[![DOI](https://zenodo.org/badge/513262401.svg)](https://zenodo.org/badge/latestdoi/513262401)
+
 
 This repository contains the files used for the evaluation of the DeMAF for the EDOC 2022 Demo Paper "The Deployment Model Abstraction Framework".
 
