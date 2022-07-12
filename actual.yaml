@@ -1,0 +1,1308 @@
+---
+properties: []
+components:
+  - default:
+      type: "physical_node"
+      description: null
+      properties:
+        - cpu_count: 4
+        - ram_GiB: 16
+        - storage_GiB: 32
+      operations: []
+      artifacts: []
+  - default-operating-system:
+      type: "operating_system"
+      description: null
+      properties:
+        - name: "Ubuntu"
+        - version: "18.04"
+        - os_family: "Linux"
+      operations: []
+      artifacts: []
+  - default-container-runtime:
+      type: "container_runtime"
+      description: null
+      properties:
+        - name: "containerd"
+      operations: []
+      artifacts: []
+  - mongo-cart-mongodb:
+      type: "mongo-cart-mongodb-type"
+      description: null
+      properties:
+        - mongodb: 27017
+        - MONGODB_DISABLE_SYSTEM_LOG: "\"no\""
+        - ALLOW_EMPTY_PASSWORD: "\"yes\""
+        - BITNAMI_DEBUG: "\"false\""
+        - MONGODB_PORT_NUMBER: "\"27017\""
+        - MONGODB_SYSTEM_LOG_VERBOSITY: "\"0\""
+        - MONGODB_ENABLE_IPV6: "\"no\""
+        - MONGODB_DISABLE_JAVASCRIPT: "\"no\""
+        - MONGODB_ENABLE_JOURNAL: "\"yes\""
+        - MONGODB_ENABLE_DIRECTORY_PER_DB: "\"no\""
+        - '"mongodb"': "27017:mongodb"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "docker.io/bitnami/mongodb:5.0.9-debian-11-r3"
+            fileURI: "-"
+  - mongo-order-mongodb:
+      type: "mongo-order-mongodb-type"
+      description: null
+      properties:
+        - mongodb: 27017
+        - MONGODB_DISABLE_SYSTEM_LOG: "\"no\""
+        - ALLOW_EMPTY_PASSWORD: "\"yes\""
+        - BITNAMI_DEBUG: "\"false\""
+        - MONGODB_PORT_NUMBER: "\"27017\""
+        - MONGODB_SYSTEM_LOG_VERBOSITY: "\"0\""
+        - MONGODB_ENABLE_IPV6: "\"no\""
+        - MONGODB_DISABLE_JAVASCRIPT: "\"no\""
+        - MONGODB_ENABLE_JOURNAL: "\"yes\""
+        - MONGODB_ENABLE_DIRECTORY_PER_DB: "\"no\""
+        - '"mongodb"': "27017:mongodb"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "docker.io/bitnami/mongodb:5.0.9-debian-11-r3"
+            fileURI: "-"
+  - kafka-zookeeper:
+      type: "kafka-zookeeper-type"
+      description: null
+      properties:
+        - client: 2181
+        - election: 3888
+        - follower: 2888
+        - ZOO_4LW_COMMANDS_WHITELIST: "\"srvr, mntr, ruok\""
+        - ALLOW_ANONYMOUS_LOGIN: "\"yes\""
+        - ZOO_SYNC_LIMIT: "\"5\""
+        - ZOO_MAX_SESSION_TIMEOUT: "\"40000\""
+        - ZOO_TICK_TIME: "\"2000\""
+        - ZOO_ENABLE_QUORUM_AUTH: "\"no\""
+        - ZOO_PRE_ALLOC_SIZE: "\"65536\""
+        - ZOO_SERVERS: "kafka-zookeeper-0.kafka-zookeeper-headless.default.svc.cluster.local:2888:3888::1"
+        - ZOO_AUTOPURGE_RETAIN_COUNT: "\"3\""
+        - ZOO_SNAPCOUNT: "\"100000\""
+        - ZOO_LOG_LEVEL: "\"ERROR\""
+        - ZOO_MAX_CLIENT_CNXNS: "\"60\""
+        - ZOO_INIT_LIMIT: "\"10\""
+        - BITNAMI_DEBUG: "\"false\""
+        - ZOO_ENABLE_AUTH: "\"no\""
+        - ZOO_DATA_LOG_DIR: "\"\""
+        - ZOO_LISTEN_ALLIPS_ENABLED: "\"no\""
+        - ZOO_PORT_NUMBER: "\"2181\""
+        - ZOO_AUTOPURGE_INTERVAL: "\"0\""
+        - ZOO_HEAP_SIZE: "\"1024\""
+        - tcp-client: "2181:client"
+        - tcp-election: "3888:election"
+        - tcp-follower: "2888:follower"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "docker.io/bitnami/zookeeper:3.8.0-debian-11-r11"
+            fileURI: "-"
+  - kafka:
+      type: "kafka-type"
+      description: null
+      properties:
+        - kafka-client: 9092
+        - kafka-internal: 9093
+        - KAFKA_CFG_SOCKET_RECEIVE_BUFFER_BYTES: "\"102400\""
+        - KAFKA_CFG_SOCKET_SEND_BUFFER_BYTES: "\"102400\""
+        - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: "\"INTERNAL:PLAINTEXT,CLIENT:PLAINTEXT\""
+        - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR: "\"1\""
+        - KAFKA_CFG_LOG_FLUSH_INTERVAL_MS: "\"1000\""
+        - KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS: "\"6000\""
+        - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: "\"1\""
+        - KAFKA_CFG_LOG_SEGMENT_BYTES: "\"1073741824\""
+        - KAFKA_CFG_DEFAULT_REPLICATION_FACTOR: "\"1\""
+        - KAFKA_CFG_SUPER_USERS: "\"User:admin\""
+        - KAFKA_CFG_ADVERTISED_LISTENERS: "\"INTERNAL://$(MY_POD_NAME).kafka-headless.default.svc.cluster.local:9093,CLIENT://$(MY_POD_NAME).kafka-headless.default.svc.cluster.local:9092\""
+        - KAFKA_CFG_LISTENERS: "\"INTERNAL://:9093,CLIENT://:9092\""
+        - KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR: "\"1\""
+        - KAFKA_CFG_LOG_RETENTION_HOURS: "\"168\""
+        - KAFKA_CFG_LOG_FLUSH_INTERVAL_MESSAGES: "\"10000\""
+        - BITNAMI_DEBUG: "\"false\""
+        - KAFKA_CFG_ZOOKEEPER_CONNECT: "\"kafka-zookeeper\""
+        - KAFKA_CFG_NUM_NETWORK_THREADS: "\"3\""
+        - KAFKA_ZOOKEEPER_PROTOCOL: "PLAINTEXT"
+        - KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND: "\"true\""
+        - KAFKA_CFG_NUM_RECOVERY_THREADS_PER_DATA_DIR: "\"1\""
+        - KAFKA_CFG_LOG_RETENTION_BYTES: "\"1073741824\""
+        - KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES: "\"104857600\""
+        - KAFKA_INTER_BROKER_LISTENER_NAME: "\"INTERNAL\""
+        - KAFKA_CFG_NUM_IO_THREADS: "\"8\""
+        - ALLOW_PLAINTEXT_LISTENER: "\"yes\""
+        - KAFKA_CFG_LOG_RETENTION_CHECK_INTERVALS_MS: "\"300000\""
+        - KAFKA_LOG_DIR: "\"/opt/bitnami/kafka/logs\""
+        - KAFKA_CFG_NUM_PARTITIONS: "\"1\""
+        - KAFKA_CFG_AUTHORIZER_CLASS_NAME: "\"\""
+        - KAFKA_CFG_DELETE_TOPIC_ENABLE: "\"false\""
+        - KAFKA_CFG_MESSAGE_MAX_BYTES: "\"1000012\""
+        - KAFKA_VOLUME_DIR: "\"/bitnami/kafka\""
+        - KAFKA_CFG_LOG_DIRS: "\"/bitnami/kafka/data\""
+        - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "\"true\""
+        - KAFKA_HEAP_OPTS: "\"-Xmx1024m -Xms1024m\""
+        - tcp-client: "9092:kafka-client"
+        - tcp-internal: "9093:kafka-internal"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "docker.io/bitnami/kafka:3.2.0-debian-11-r12"
+            fileURI: "-"
+  - cdcservice:
+      type: "cdcservice-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - EVENTUATELOCAL_CDC_READER_NAME: "PostgresPollingReader"
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.postgresql.Driver"
+        - SPRING_PROFILES_ACTIVE: "EventuatePolling"
+        - SPRING_DATASOURCE_PASSWORD: "eventuate"
+        - SPRING_DATASOURCE_TEST_ON_BORROW: "\"true\""
+        - SPRING_DATASOURCE_VALIDATION_QUERY: "SELECT 1"
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: "kafka-zookeeper:2181"
+        - SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-orchestrator/eventuate"
+        - EVENTUATE_OUTBOX_ID: "\"1\""
+        - JAVA_OPTS: "-Xmx64m"
+        - SPRING_DATASOURCE_USERNAME: "eventuate"
+        - '"8099"': "8099:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "eventuateio/eventuate-cdc-service:0.12.0.RELEASE"
+            fileURI: "-"
+  - uibackend:
+      type: "uibackend-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - T2_ORCHESTRATOR_URL: "http://orchestrator-cs/order/"
+        - T2_INVENTORY_URL: "http://inventory-cs/inventory/"
+        - T2_RESERVATION_ENDPOINT: "reservation"
+        - JAEGER_HOST: "localhost #todo"
+        - T2_CART_URL: "http://cart-cs/cart/"
+        - external_port: "80:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "t2project/uibackend:main"
+            fileURI: "-"
+  - cart:
+      type: "cart-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - T2_CART_TTL: "\"0\""
+        - JAEGER_HOST: "localhost #todo"
+        - MONGO_HOST: "mongo-cart-mongodb"
+        - T2_CART_TASKRATE: "\"0\""
+        - external_port: "80:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "t2project/cart:main"
+            fileURI: "-"
+  - creditinstitute:
+      type: "creditinstitute-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - external_port: "80:8080"
+        - http: "80:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "t2project/creditinstitute:main"
+            fileURI: "-"
+  - ui:
+      type: "ui-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - T2_UIBACKEND_URL: "http://uibackend-cs/"
+        - external_port: "80:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "t2project/ui:main"
+            fileURI: "-"
+  - payment:
+      type: "payment-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - T2_PAYMENT_PROVIDER_DUMMY_URL: "http://creditinstitute-cs/pay"
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.postgresql.Driver"
+        - SPRING_DATASOURCE_PASSWORD: "eventuate"
+        - JAEGER_SERVICE_NAME: "payment"
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: "kafka-zookeeper:2181"
+        - SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-orchestrator/eventuate"
+        - JAEGER_ENABLE: "\"FALSE\""
+        - SPRING_DATASOURCE_USERNAME: "eventuate"
+        - JAEGER_HOST: "simplest-agent #todo"
+        - T2_PAYMENT_PROVIDER_TIMEOUT: "\"5\""
+        - external_port: "80:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "t2project/payment:main"
+            fileURI: "-"
+  - orchestrator:
+      type: "orchestrator-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - JAEGER_SERVICE_NAME: "orchestrator"
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.postgresql.Driver"
+        - SPRING_DATASOURCE_PASSWORD: "eventuate"
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: "kafka-zookeeper:2181"
+        - SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-orchestrator/eventuate"
+        - JAEGER_ENABLE: "\"FALSE\""
+        - SPRING_DATASOURCE_USERNAME: "eventuate"
+        - JAEGER_HOST: "simplest-agent #todo"
+        - external_port: "80:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "t2project/orchestrator:main"
+            fileURI: "-"
+  - postgres-orchestrator:
+      type: "postgres-orchestrator-type"
+      description: null
+      properties:
+        - container_port: 5432
+        - POSTGRES_PASSWORD: "eventuate"
+        - POSTGRES_USER: "eventuate"
+        - USE_DB_ID: "\"true\""
+        - external_port: "5432:5432"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "eventuateio/eventuate-tram-sagas-postgres:0.18.0.RELEASE"
+            fileURI: "-"
+  - postgres-inventory:
+      type: "postgres-inventory-type"
+      description: null
+      properties:
+        - container_port: 5432
+        - POSTGRES_DB: "inventory"
+        - POSTGRES_PASSWORD: "inventory"
+        - POSTGRES_USER: "inventory"
+        - external_port: "5432:5432"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "postgres:14.1"
+            fileURI: "-"
+  - order:
+      type: "order-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - MONGO_HOST: "mongo-order-mongodb"
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.postgresql.Driver"
+        - SPRING_DATASOURCE_PASSWORD: "eventuate"
+        - JAEGER_SERVICE_NAME: "order"
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: "kafka-zookeeper:2181"
+        - SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-orchestrator/eventuate"
+        - JAEGER_ENABLE: "\"FALSE\""
+        - SPRING_DATASOURCE_USERNAME: "eventuate"
+        - JAEGER_HOST: "simplest-agent #todo"
+        - external_port: "80:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "t2project/order:main"
+            fileURI: "-"
+  - inventory:
+      type: "inventory-type"
+      description: null
+      properties:
+        - container_port: 8080
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS: "kafka:9092"
+        - INVENTORY_SIZE: "\"25\""
+        - JAEGER_HOST: "simplest-agent #todo"
+        - JAEGER_SERVICE_NAME: "inventory"
+        - SPRING_PROFILE_ACTIVE: "saga"
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME: "org.postgresql.Driver"
+        - SPRING_DATASOURCE_PASSWORD: "inventory"
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING: "kafka-zookeeper:2181"
+        - SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres-inventory:5432/inventory"
+        - JAEGER_ENABLE: "\"FALSE\""
+        - T2_INVENTORY_TTL: "\"0\""
+        - T2_INVENTORY_TASKRATE: "\"0\""
+        - SPRING_DATASOURCE_USERNAME: "inventory"
+        - external_port: "80:8080"
+      operations: []
+      artifacts:
+        - docker_image:
+            name: "t2project/inventory:main"
+            fileURI: "-"
+relations:
+  - default-operating-system_HostedOn_default:
+      type: "HostedOn"
+      description: null
+      source: "default-operating-system"
+      target: "default"
+      properties: []
+      operations: []
+  - default-container-runtime_HostedOn_default-operating-system:
+      type: "HostedOn"
+      description: null
+      source: "default-container-runtime"
+      target: "default-operating-system"
+      properties: []
+      operations: []
+  - mongo-cart-mongodb_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "mongo-cart-mongodb"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - mongo-order-mongodb_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "mongo-order-mongodb"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - kafka-zookeeper_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "kafka-zookeeper"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - kafka_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "kafka"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - kafka_ConnectsTo_kafka-zookeeper:
+      type: "ConnectsTo"
+      description: null
+      source: "kafka"
+      target: "kafka-zookeeper"
+      properties: []
+      operations: []
+  - creditinstitute_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "creditinstitute"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - ui_ConnectsTo_uibackend:
+      type: "ConnectsTo"
+      description: null
+      source: "ui"
+      target: "uibackend"
+      properties: []
+      operations: []
+  - cdcservice_ConnectsTo_postgres-orchestrator:
+      type: "ConnectsTo"
+      description: null
+      source: "cdcservice"
+      target: "postgres-orchestrator"
+      properties: []
+      operations: []
+  - uibackend_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "uibackend"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - orchestrator_ConnectsTo_postgres-orchestrator:
+      type: "ConnectsTo"
+      description: null
+      source: "orchestrator"
+      target: "postgres-orchestrator"
+      properties: []
+      operations: []
+  - cdcservice_ConnectsTo_kafka:
+      type: "ConnectsTo"
+      description: null
+      source: "cdcservice"
+      target: "kafka"
+      properties: []
+      operations: []
+  - orchestrator_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "orchestrator"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - uibackend_ConnectsTo_cart:
+      type: "ConnectsTo"
+      description: null
+      source: "uibackend"
+      target: "cart"
+      properties: []
+      operations: []
+  - orchestrator_ConnectsTo_kafka-zookeeper:
+      type: "ConnectsTo"
+      description: null
+      source: "orchestrator"
+      target: "kafka-zookeeper"
+      properties: []
+      operations: []
+  - inventory_ConnectsTo_postgres-inventory:
+      type: "ConnectsTo"
+      description: null
+      source: "inventory"
+      target: "postgres-inventory"
+      properties: []
+      operations: []
+  - orchestrator_ConnectsTo_kafka:
+      type: "ConnectsTo"
+      description: null
+      source: "orchestrator"
+      target: "kafka"
+      properties: []
+      operations: []
+  - postgres-inventory_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "postgres-inventory"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - uibackend_ConnectsTo_inventory:
+      type: "ConnectsTo"
+      description: null
+      source: "uibackend"
+      target: "inventory"
+      properties: []
+      operations: []
+  - payment_ConnectsTo_kafka:
+      type: "ConnectsTo"
+      description: null
+      source: "payment"
+      target: "kafka"
+      properties: []
+      operations: []
+  - order_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "order"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - inventory_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "inventory"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - payment_ConnectsTo_postgres-orchestrator:
+      type: "ConnectsTo"
+      description: null
+      source: "payment"
+      target: "postgres-orchestrator"
+      properties: []
+      operations: []
+  - order_ConnectsTo_mongo-order-mongodb:
+      type: "ConnectsTo"
+      description: null
+      source: "order"
+      target: "mongo-order-mongodb"
+      properties: []
+      operations: []
+  - order_ConnectsTo_kafka:
+      type: "ConnectsTo"
+      description: null
+      source: "order"
+      target: "kafka"
+      properties: []
+      operations: []
+  - uibackend_ConnectsTo_orchestrator:
+      type: "ConnectsTo"
+      description: null
+      source: "uibackend"
+      target: "orchestrator"
+      properties: []
+      operations: []
+  - ui_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "ui"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - inventory_ConnectsTo_kafka-zookeeper:
+      type: "ConnectsTo"
+      description: null
+      source: "inventory"
+      target: "kafka-zookeeper"
+      properties: []
+      operations: []
+  - cart_ConnectsTo_mongo-cart-mongodb:
+      type: "ConnectsTo"
+      description: null
+      source: "cart"
+      target: "mongo-cart-mongodb"
+      properties: []
+      operations: []
+  - cdcservice_ConnectsTo_kafka-zookeeper:
+      type: "ConnectsTo"
+      description: null
+      source: "cdcservice"
+      target: "kafka-zookeeper"
+      properties: []
+      operations: []
+  - payment_ConnectsTo_kafka-zookeeper:
+      type: "ConnectsTo"
+      description: null
+      source: "payment"
+      target: "kafka-zookeeper"
+      properties: []
+      operations: []
+  - cdcservice_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "cdcservice"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - payment_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "payment"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - postgres-orchestrator_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "postgres-orchestrator"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+  - payment_ConnectsTo_creditinstitute:
+      type: "ConnectsTo"
+      description: null
+      source: "payment"
+      target: "creditinstitute"
+      properties: []
+      operations: []
+  - order_ConnectsTo_kafka-zookeeper:
+      type: "ConnectsTo"
+      description: null
+      source: "order"
+      target: "kafka-zookeeper"
+      properties: []
+      operations: []
+  - order_ConnectsTo_postgres-orchestrator:
+      type: "ConnectsTo"
+      description: null
+      source: "order"
+      target: "postgres-orchestrator"
+      properties: []
+      operations: []
+  - inventory_ConnectsTo_kafka:
+      type: "ConnectsTo"
+      description: null
+      source: "inventory"
+      target: "kafka"
+      properties: []
+      operations: []
+  - cart_HostedOn_default-container-runtime:
+      type: "HostedOn"
+      description: null
+      source: "cart"
+      target: "default-container-runtime"
+      properties: []
+      operations: []
+component_types:
+  - BaseType:
+      extends: "-"
+      description: "This is the base type"
+      properties: []
+      operations: []
+  - physical_node:
+      extends: "-"
+      description: null
+      properties:
+        - cpu_count:
+            type: "INTEGER"
+            required: false
+        - ram_GiB:
+            type: "INTEGER"
+            required: false
+        - storage_GiB:
+            type: "INTEGER"
+            required: false
+      operations: []
+  - operating_system:
+      extends: "-"
+      description: null
+      properties:
+        - name:
+            type: "STRING"
+            required: false
+        - version:
+            type: "STRING"
+            required: false
+        - os_family:
+            type: "STRING"
+            required: false
+      operations: []
+  - container_runtime:
+      extends: "-"
+      description: null
+      properties:
+        - name:
+            type: "STRING"
+            required: false
+        - version:
+            type: "STRING"
+            required: false
+      operations: []
+  - mongo-cart-mongodb-type:
+      extends: "-"
+      description: null
+      properties:
+        - mongodb:
+            type: "INTEGER"
+            required: false
+        - MONGODB_DISABLE_SYSTEM_LOG:
+            type: "STRING"
+            required: false
+        - ALLOW_EMPTY_PASSWORD:
+            type: "STRING"
+            required: false
+        - BITNAMI_DEBUG:
+            type: "STRING"
+            required: false
+        - MONGODB_PORT_NUMBER:
+            type: "STRING"
+            required: false
+        - MONGODB_SYSTEM_LOG_VERBOSITY:
+            type: "STRING"
+            required: false
+        - MONGODB_ENABLE_IPV6:
+            type: "STRING"
+            required: false
+        - MONGODB_DISABLE_JAVASCRIPT:
+            type: "STRING"
+            required: false
+        - MONGODB_ENABLE_JOURNAL:
+            type: "STRING"
+            required: false
+        - MONGODB_ENABLE_DIRECTORY_PER_DB:
+            type: "STRING"
+            required: false
+        - '"mongodb"':
+            type: "STRING"
+            required: false
+      operations: []
+  - mongo-order-mongodb-type:
+      extends: "-"
+      description: null
+      properties:
+        - mongodb:
+            type: "INTEGER"
+            required: false
+        - MONGODB_DISABLE_SYSTEM_LOG:
+            type: "STRING"
+            required: false
+        - ALLOW_EMPTY_PASSWORD:
+            type: "STRING"
+            required: false
+        - BITNAMI_DEBUG:
+            type: "STRING"
+            required: false
+        - MONGODB_PORT_NUMBER:
+            type: "STRING"
+            required: false
+        - MONGODB_SYSTEM_LOG_VERBOSITY:
+            type: "STRING"
+            required: false
+        - MONGODB_ENABLE_IPV6:
+            type: "STRING"
+            required: false
+        - MONGODB_DISABLE_JAVASCRIPT:
+            type: "STRING"
+            required: false
+        - MONGODB_ENABLE_JOURNAL:
+            type: "STRING"
+            required: false
+        - MONGODB_ENABLE_DIRECTORY_PER_DB:
+            type: "STRING"
+            required: false
+        - '"mongodb"':
+            type: "STRING"
+            required: false
+      operations: []
+  - kafka-zookeeper-type:
+      extends: "-"
+      description: null
+      properties:
+        - client:
+            type: "INTEGER"
+            required: false
+        - election:
+            type: "INTEGER"
+            required: false
+        - follower:
+            type: "INTEGER"
+            required: false
+        - ZOO_4LW_COMMANDS_WHITELIST:
+            type: "STRING"
+            required: false
+        - ALLOW_ANONYMOUS_LOGIN:
+            type: "STRING"
+            required: false
+        - ZOO_SYNC_LIMIT:
+            type: "STRING"
+            required: false
+        - ZOO_MAX_SESSION_TIMEOUT:
+            type: "STRING"
+            required: false
+        - ZOO_TICK_TIME:
+            type: "STRING"
+            required: false
+        - ZOO_ENABLE_QUORUM_AUTH:
+            type: "STRING"
+            required: false
+        - ZOO_PRE_ALLOC_SIZE:
+            type: "STRING"
+            required: false
+        - ZOO_SERVERS:
+            type: "STRING"
+            required: false
+        - ZOO_AUTOPURGE_RETAIN_COUNT:
+            type: "STRING"
+            required: false
+        - ZOO_SNAPCOUNT:
+            type: "STRING"
+            required: false
+        - ZOO_LOG_LEVEL:
+            type: "STRING"
+            required: false
+        - ZOO_MAX_CLIENT_CNXNS:
+            type: "STRING"
+            required: false
+        - ZOO_INIT_LIMIT:
+            type: "STRING"
+            required: false
+        - BITNAMI_DEBUG:
+            type: "STRING"
+            required: false
+        - ZOO_ENABLE_AUTH:
+            type: "STRING"
+            required: false
+        - ZOO_DATA_LOG_DIR:
+            type: "STRING"
+            required: false
+        - ZOO_LISTEN_ALLIPS_ENABLED:
+            type: "STRING"
+            required: false
+        - ZOO_PORT_NUMBER:
+            type: "STRING"
+            required: false
+        - ZOO_AUTOPURGE_INTERVAL:
+            type: "STRING"
+            required: false
+        - ZOO_HEAP_SIZE:
+            type: "STRING"
+            required: false
+        - tcp-client:
+            type: "STRING"
+            required: false
+        - tcp-election:
+            type: "STRING"
+            required: false
+        - tcp-follower:
+            type: "STRING"
+            required: false
+      operations: []
+  - kafka-type:
+      extends: "-"
+      description: null
+      properties:
+        - kafka-client:
+            type: "INTEGER"
+            required: false
+        - kafka-internal:
+            type: "INTEGER"
+            required: false
+        - KAFKA_CFG_SOCKET_RECEIVE_BUFFER_BYTES:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_SOCKET_SEND_BUFFER_BYTES:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LOG_FLUSH_INTERVAL_MS:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_ZOOKEEPER_CONNECTION_TIMEOUT_MS:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_TRANSACTION_STATE_LOG_REPLICATION_FACTOR:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LOG_SEGMENT_BYTES:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_DEFAULT_REPLICATION_FACTOR:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_SUPER_USERS:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_ADVERTISED_LISTENERS:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LISTENERS:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_TRANSACTION_STATE_LOG_MIN_ISR:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LOG_RETENTION_HOURS:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LOG_FLUSH_INTERVAL_MESSAGES:
+            type: "STRING"
+            required: false
+        - BITNAMI_DEBUG:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_ZOOKEEPER_CONNECT:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_NUM_NETWORK_THREADS:
+            type: "STRING"
+            required: false
+        - KAFKA_ZOOKEEPER_PROTOCOL:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_NUM_RECOVERY_THREADS_PER_DATA_DIR:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LOG_RETENTION_BYTES:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES:
+            type: "STRING"
+            required: false
+        - KAFKA_INTER_BROKER_LISTENER_NAME:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_NUM_IO_THREADS:
+            type: "STRING"
+            required: false
+        - ALLOW_PLAINTEXT_LISTENER:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LOG_RETENTION_CHECK_INTERVALS_MS:
+            type: "STRING"
+            required: false
+        - KAFKA_LOG_DIR:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_NUM_PARTITIONS:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_AUTHORIZER_CLASS_NAME:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_DELETE_TOPIC_ENABLE:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_MESSAGE_MAX_BYTES:
+            type: "STRING"
+            required: false
+        - KAFKA_VOLUME_DIR:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_LOG_DIRS:
+            type: "STRING"
+            required: false
+        - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE:
+            type: "STRING"
+            required: false
+        - KAFKA_HEAP_OPTS:
+            type: "STRING"
+            required: false
+        - tcp-client:
+            type: "STRING"
+            required: false
+        - tcp-internal:
+            type: "STRING"
+            required: false
+      operations: []
+  - cdcservice-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - EVENTUATELOCAL_CDC_READER_NAME:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME:
+            type: "STRING"
+            required: false
+        - SPRING_PROFILES_ACTIVE:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_PASSWORD:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_TEST_ON_BORROW:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_VALIDATION_QUERY:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_URL:
+            type: "STRING"
+            required: false
+        - EVENTUATE_OUTBOX_ID:
+            type: "STRING"
+            required: false
+        - JAVA_OPTS:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_USERNAME:
+            type: "STRING"
+            required: false
+        - '"8099"':
+            type: "STRING"
+            required: false
+      operations: []
+  - uibackend-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - T2_ORCHESTRATOR_URL:
+            type: "STRING"
+            required: false
+        - T2_INVENTORY_URL:
+            type: "STRING"
+            required: false
+        - T2_RESERVATION_ENDPOINT:
+            type: "STRING"
+            required: false
+        - JAEGER_HOST:
+            type: "STRING"
+            required: false
+        - T2_CART_URL:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+  - cart-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - T2_CART_TTL:
+            type: "STRING"
+            required: false
+        - JAEGER_HOST:
+            type: "STRING"
+            required: false
+        - MONGO_HOST:
+            type: "STRING"
+            required: false
+        - T2_CART_TASKRATE:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+  - creditinstitute-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+        - http:
+            type: "STRING"
+            required: false
+      operations: []
+  - ui-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - T2_UIBACKEND_URL:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+  - payment-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - T2_PAYMENT_PROVIDER_DUMMY_URL:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_PASSWORD:
+            type: "STRING"
+            required: false
+        - JAEGER_SERVICE_NAME:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_URL:
+            type: "STRING"
+            required: false
+        - JAEGER_ENABLE:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_USERNAME:
+            type: "STRING"
+            required: false
+        - JAEGER_HOST:
+            type: "STRING"
+            required: false
+        - T2_PAYMENT_PROVIDER_TIMEOUT:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+  - orchestrator-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - JAEGER_SERVICE_NAME:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_PASSWORD:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_URL:
+            type: "STRING"
+            required: false
+        - JAEGER_ENABLE:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_USERNAME:
+            type: "STRING"
+            required: false
+        - JAEGER_HOST:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+  - postgres-orchestrator-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - POSTGRES_PASSWORD:
+            type: "STRING"
+            required: false
+        - POSTGRES_USER:
+            type: "STRING"
+            required: false
+        - USE_DB_ID:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+  - postgres-inventory-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - POSTGRES_DB:
+            type: "STRING"
+            required: false
+        - POSTGRES_PASSWORD:
+            type: "STRING"
+            required: false
+        - POSTGRES_USER:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+  - order-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - MONGO_HOST:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_PASSWORD:
+            type: "STRING"
+            required: false
+        - JAEGER_SERVICE_NAME:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_URL:
+            type: "STRING"
+            required: false
+        - JAEGER_ENABLE:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_USERNAME:
+            type: "STRING"
+            required: false
+        - JAEGER_HOST:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+  - inventory-type:
+      extends: "-"
+      description: null
+      properties:
+        - container_port:
+            type: "INTEGER"
+            required: false
+        - EVENTUATELOCAL_KAFKA_BOOTSTRAP_SERVERS:
+            type: "STRING"
+            required: false
+        - INVENTORY_SIZE:
+            type: "STRING"
+            required: false
+        - JAEGER_HOST:
+            type: "STRING"
+            required: false
+        - JAEGER_SERVICE_NAME:
+            type: "STRING"
+            required: false
+        - SPRING_PROFILE_ACTIVE:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_DRIVER_CLASS_NAME:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_PASSWORD:
+            type: "STRING"
+            required: false
+        - EVENTUATELOCAL_ZOOKEEPER_CONNECTION_STRING:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_URL:
+            type: "STRING"
+            required: false
+        - JAEGER_ENABLE:
+            type: "STRING"
+            required: false
+        - T2_INVENTORY_TTL:
+            type: "STRING"
+            required: false
+        - T2_INVENTORY_TASKRATE:
+            type: "STRING"
+            required: false
+        - SPRING_DATASOURCE_USERNAME:
+            type: "STRING"
+            required: false
+        - external_port:
+            type: "STRING"
+            required: false
+      operations: []
+relation_types:
+  - DependsOn:
+      extends: "-"
+      description: "generic relation type"
+      properties: []
+      operations: []
+  - HostedOn:
+      extends: "DependsOn"
+      description: "hosted on relation"
+      properties: []
+      operations: []
+  - ConnectsTo:
+      extends: "DependsOn"
+      description: "connects to relation"
+      properties: []
+      operations: []
